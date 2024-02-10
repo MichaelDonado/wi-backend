@@ -101,3 +101,4 @@ Endpoints:
 ```
 cargar el archivo backend-wompi.postman_collection.json en postman 
 ```
+

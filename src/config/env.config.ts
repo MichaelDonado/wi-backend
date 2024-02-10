@@ -9,3 +9,4 @@ export default registerAs('config', () => {
     publicKey: process.env.PUBLIC_KEY,
   };
 });
+

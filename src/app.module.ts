@@ -38,3 +38,4 @@ import { TripsModule } from './modules/trips/trips.module';
   providers: [],
 })
 export class AppModule {}
+

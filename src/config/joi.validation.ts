@@ -7,3 +7,4 @@ export const JoiValidationSchema = Joi.object({
   WOMPI_API: Joi.string().required(),
   PUBLIC_KEY: Joi.string().required(),
 });
+

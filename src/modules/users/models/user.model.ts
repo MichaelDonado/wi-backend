@@ -48,7 +48,7 @@ export class User {
 
   @Prop()
   cardToken?: string;
-
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+

@@ -60,3 +60,4 @@ export class UsersController {
     return this.usersService.removeUser(id);
   }
 }
+
