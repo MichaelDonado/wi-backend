@@ -6,5 +6,6 @@ export default registerAs('config', () => {
     appPort: process.env.APP_PORT,
     jwtToken: process.env.JWT_TOKEN,
     wompiApi: process.env.WOMPI_API,
+    publicKey: process.env.PUBLIC_KEY,
   };
 });

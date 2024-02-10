@@ -31,16 +31,20 @@ export class User {
   })
   isActive: boolean;
 
-  @Prop({ 
+  @Prop({
     required: true,
     array: true,
   })
   roles: string[];
 
-  @Prop({ 
+  @Prop()
+  isDriving?: boolean
+
+
+  @Prop({
     type: { types: String, enum: ['card', 'nequi'] },
   })
-  typePayment?: TypePayment; 
+  typePayment?: TypePayment;
 
   @Prop()
   cardToken?: string;

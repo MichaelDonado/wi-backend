@@ -17,7 +17,7 @@ Asegúrate de tener Node.js y npm (o yarn) instalados en tu máquina. Luego, eje
 
 ```
 npm install
-# o
+ o
 yarn install
 ```
 
@@ -35,6 +35,7 @@ MONGODB_HOST=
 APP_PORT= 
 JWT_SECRET=
 WOMPI_API=
+PUBLIC_KEY=
 ```
 ## 🏗️ Estructura del Proyecto
 La estructura del proyecto es la siguiente:
