@@ -1,7 +1,7 @@
 # Wi Backend
 
 <p align="center">
-  <img src="" alt="Imagen" width="300" />
+  <img src="https://static.vecteezy.com/system/resources/previews/023/220/729/original/3d-cartoon-design-illustration-of-digital-wallet-and-mobile-banking-application-online-payments-transfer-and-saving-money-concept-png.png" alt="Imagen" width="300" />
 </p>
 
 
@@ -92,11 +92,9 @@ yarn start:dev
 - <img src="https://cdn.worldvectorlogo.com/logos/mongodb-icon-1.svg" alt="Imagen" width="30" heigth="30" /> MongoDB
 
 # Notes
-Website:
- <a target="_blank" href="">View Web Site </a> 
-
+To view the documentation, the project must be running 
 Endpoints:
- <a target="_blank"  href="">View Documentation </a> 
+ <a target="_blank"  href="http://localhost:3000/">View Documentation </a> 
 ```
 load backend-wi.postman_collection.json file into postman 
 ```
