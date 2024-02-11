@@ -9,6 +9,8 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { TripsModule } from './modules/trips/trips.module';
+import { CalculateAmountService } from './utils/calculate/calculate-amount.service';
+import { HandleErrorService } from './utils/handle-error/handle-error.service';
 
 @Module({
   imports: [
@@ -35,7 +37,7 @@ import { TripsModule } from './modules/trips/trips.module';
     TripsModule
   ],
   controllers: [],
-  providers: [],
+  providers: [CalculateAmountService, HandleErrorService],
 })
 export class AppModule {}
 

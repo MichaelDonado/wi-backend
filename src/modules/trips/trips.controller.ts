@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@n
 import { TripsService } from './trips.service';
 import { CreateTripDto } from './dto/create-trip.dto';
 import { UpdateTripDto } from './dto/update-trip.dto';
-import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Auth, RoleProtected } from '../auth/decorators';
 import { ValidRoles } from '../auth/interfaces';
 import { AuthGuard } from '@nestjs/passport';
@@ -34,6 +34,7 @@ export class TripsController {
     status: 200,
     description: 'Return trip completed',
   })
+  @ApiParam({ name: 'id', type: String, description: 'ID of the trip', required: true })
   @Patch(':id')
   completedTrip(@Param('id', ParseMongoIdPipe) id:Types.ObjectId) {
     return this.tripsService.completedTrip(id);
@@ -42,8 +43,9 @@ export class TripsController {
   @ApiOperation({ summary: 'Search for a trip by id' })
   @ApiResponse({
     status: 200,
-    description: '',
+    description: 'Return trip by id',
   })
+  @ApiParam({ name: 'id', type: String, description: 'ID of the trip', required: true })
   @Get(':id')
   getTripById(@Param('id', ParseMongoIdPipe) id:Types.ObjectId) {
     return this.tripsService.getTripById(id);

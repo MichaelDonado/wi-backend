@@ -6,6 +6,8 @@ import { Trip } from './models/trip.model';
 import mongoose, { Model, Types } from 'mongoose';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '../users/models/user.model';
+import { CalculateAmountService } from '@/utils/calculate/calculate-amount.service';
+import { HandleErrorService } from '@/utils/handle-error/handle-error.service';
 
 const USER_NOT_FOUND = 'User not found';
 const TRIP_NOT_FOUND = 'Trip not found';
@@ -16,6 +18,8 @@ export class TripsService {
     @InjectModel(Trip.name) private readonly tripModel: Model<Trip>,
     @InjectModel(User.name) private readonly userModel: Model<User>,
     private readonly jwtService: JwtService,
+    private readonly calculateAmountService: CalculateAmountService,
+    private readonly handleErrorService: HandleErrorService,
   ) { }
 
   async createTrip(createTripDto: CreateTripDto) {
@@ -63,50 +67,62 @@ export class TripsService {
       return { ...newTrip.toObject() }
 
     } catch (error) {
-      this.handleDBErrors(error);
+      this.handleErrorService.handleDBErrors(error);
     }
 
   }
 
   async completedTrip(id: Types.ObjectId) {
-    const trip = await this.getTripById(id);
-    const noFoundTrip = trip.response;
+    try {
+      const trip = await this.getTripById(id);
+      const noFoundTrip = trip.response;
 
-    if (noFoundTrip) {
-      return noFoundTrip;
+      if (noFoundTrip) {
+        return noFoundTrip;
+      }
+
+      if (trip.status === 'final') {
+        return new NotFoundException('Trip completed')
+      }
+
+      const tripCompleted = await this.getTripFinishedAt(id);
+
+      const distanceKm = this.calculateAmountService.calculateDistance(tripCompleted.startPosition, tripCompleted.finalPosition);
+
+      const elapsedTimeMinutes = this.calculateAmountService.calculateElapsedTime(tripCompleted.created_at, tripCompleted.finished_at);
+
+      const totalAmount = this.calculateAmountService.calculateTotalAmount(distanceKm, elapsedTimeMinutes);
+
+      await this.tripModel
+        .updateOne({ _id: id }, { price: totalAmount, status: 'final' }, { new: true })
+        .lean();
+
+      const completed = await this.tripModel.findById(trip._id);
+
+      const driverId = trip.driverId;
+
+      await this.updateStatusDriver(driverId, false);
+
+      return { ...completed.toObject() }
+
+    } catch (error) {
+      this.handleErrorService.handleDBErrors(error);
     }
 
-    if (trip.status === 'final') {
-      return new NotFoundException('Trip completed')
-    }
-
-    const tripCompleted = await this.getTripFinishedAt(id);
-
-    const distanceKm = this.calculateDistance(tripCompleted.startPosition, tripCompleted.finalPosition);
-
-    const elapsedTimeMinutes = this.calculateElapsedTime(tripCompleted.created_at, tripCompleted.finished_at);
-
-    const totalAmount = this.calculateTotalAmount(distanceKm, elapsedTimeMinutes);
-
-    await this.tripModel
-      .updateOne({ _id: id }, { price: totalAmount, status: 'final' }, { new: true })
-      .lean();
-
-    const completed = await this.tripModel.findById(trip._id);
-
-    const driverId = trip.driverId;
-
-    await this.updateStatusDriver(driverId, false);
-
-    return { ...completed.toObject() }
   }
 
   private async getTripFinishedAt(_id: Types.ObjectId) {
-    await this.tripModel
-      .updateOne({ _id }, { finished_at: new Date().toISOString() }, { new: true })
-      .lean();
-    const trip = await this.getTripById(_id);
-    return trip;
+    try {
+      await this.tripModel
+        .updateOne({ _id }, { finished_at: new Date().toISOString() }, { new: true })
+        .lean();
+      const trip = await this.getTripById(_id);
+      return trip;
+    } catch (error) {
+      this.handleErrorService.handleDBErrors(error);
+    }
+
+
   }
 
   async getTripById(id: Types.ObjectId): Promise<Trip | any> {
@@ -120,14 +136,20 @@ export class TripsService {
       return trip;
     } catch (error) {
       console.log(error)
-      this.handleDBErrors(error);
+      this.handleErrorService.handleDBErrors(error);
     }
   }
 
   private async updateStatusDriver(driverId: Types.ObjectId, isDriving: boolean) {
-    await this.userModel
-      .updateOne({ _id: driverId }, { isDriving })
-      .lean();
+    try {
+      await this.userModel
+        .updateOne({ _id: driverId }, { isDriving })
+        .lean();
+    } catch (error) {
+      console.log(error)
+      this.handleErrorService.handleDBErrors(error);
+    }
+
   }
 
   private async getFreeDriver() {
@@ -140,55 +162,8 @@ export class TripsService {
 
       return driver;
     } catch (error) {
-      this.handleDBErrors(error)
+      this.handleErrorService.handleDBErrors(error)
     }
-  }
-
-  calculateDistance(startPosition: { latitude: number; longitude: number }, finalPosition: { latitude: number; longitude: number }): number {
-    const earthRadiusKm = 6371;
-    const lat1 = this.toRadians(startPosition.latitude);
-    const lon1 = this.toRadians(startPosition.longitude);
-    const lat2 = this.toRadians(finalPosition.latitude);
-    const lon2 = this.toRadians(finalPosition.longitude);
-
-    const dLat = lat2 - lat1;
-    const dLon = lon2 - lon1;
-
-    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(lat1) * Math.cos(lat2) *
-      Math.sin(dLon / 2) * Math.sin(dLon / 2);
-
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-    const distance = earthRadiusKm * c;
-
-    return distance;
-  }
-
-  private toRadians(degrees: number): number {
-    return degrees * (Math.PI / 180);
-  }
-
-  private calculateElapsedTime(startTime: Date, endTime: Date): number {
-    const elapsedMilliseconds = endTime.getTime() - startTime.getTime();
-    const elapsedMinutes = elapsedMilliseconds / (1000 * 60);
-
-    return elapsedMinutes;
-  }
-
-  private calculateTotalAmount(distanceKm: number, elapsedTimeMinutes: number): number {
-    const kmRate = 1000;
-    const minuteRate = 200;
-    const baseFee = 3500;
-
-    const totalAmount = (distanceKm * kmRate) + (elapsedTimeMinutes * minuteRate) + baseFee;
-
-    return Math.round(totalAmount);;
-  }
-
-  private handleDBErrors(error: any): never {
-    console.log(error);
-    throw new InternalServerErrorException('Please check server logs');
   }
 
 }
