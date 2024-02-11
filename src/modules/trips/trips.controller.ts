@@ -29,6 +29,11 @@ export class TripsController {
     return this.tripsService.createTrip(createTripDto);
   }
 
+  @Patch(':id')
+  completedTrip(@Param('id', ParseMongoIdPipe) id:Types.ObjectId) {
+    return this.tripsService.completedTrip(id);
+  }
+
   @Get(':id')
   getTripById(@Param('id', ParseMongoIdPipe) id:Types.ObjectId) {
     return this.tripsService.getTripById(id);
