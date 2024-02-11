@@ -23,19 +23,19 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
-  @ApiOperation({ summary: 'Registra un nuevo usuario' })
+  @ApiOperation({ summary: 'Register a new user' })
   @ApiResponse({
     status: 200,
-    description: 'retorna el usuario creado mas el token',
+    description: 'returns the user created with the token',
   })
   createUser(@Body() createUserDto: CreateUserDto) {
     return this.authService.create(createUserDto);
   }
 
   @Post('login')
-  @ApiOperation({ summary: 'Inicia sesión de usuario' })
-  @ApiResponse({ status: 200, description: 'Inicio de sesión exitoso' })
-  @ApiResponse({ status: 401, description: 'Credenciales incorrectas' })
+  @ApiOperation({ summary: 'User login' })
+  @ApiResponse({ status: 200, description: 'Successful login' })
+  @ApiResponse({ status: 401, description: 'Incorrect credentials' })
   loginUser(@Body() loginUserDto: LoginUserDto) {
     return this.authService.login(loginUserDto);
   }

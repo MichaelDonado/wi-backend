@@ -7,8 +7,8 @@ import mongoose, { Model, Types } from 'mongoose';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '../users/models/user.model';
 
-const USER_NOT_FOUND = 'Usuario no encontrado';
-const TRIP_NOT_FOUND = 'Viaje no encontrado';
+const USER_NOT_FOUND = 'User not found';
+const TRIP_NOT_FOUND = 'Trip not found';
 
 @Injectable()
 export class TripsService {
@@ -30,11 +30,11 @@ export class TripsService {
       const isRider = user.roles.includes('rider');
 
       if (!isRider) {
-        return new NotFoundException('El usuario no es un rider');
+        return new NotFoundException('The user is not a rider');
       }
 
       if (!user.cardToken) {
-        return new BadRequestException('Agrega un metodo de pago para continuar');
+        return new BadRequestException('Add a payment method to continue');
       }
 
       const _id = new Types.ObjectId();
@@ -42,7 +42,7 @@ export class TripsService {
       const driverFree = await this.getFreeDriver();
 
       if (!driverFree) {
-        return new NotFoundException('No hay conductores disponibles en el momento');
+        return new NotFoundException('No drivers available at the moment');
       }
 
       const driverId = driverFree.toObject()._id;
@@ -77,7 +77,7 @@ export class TripsService {
     }
 
     if (trip.status === 'final') {
-      return new NotFoundException('Viaje finalizado')
+      return new NotFoundException('Trip completed')
     }
 
     const tripCompleted = await this.getTripFinishedAt(id);

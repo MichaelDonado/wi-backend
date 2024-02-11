@@ -27,7 +27,7 @@ export class AuthService {
     try {
       const { password, roles, ...userData } = createUserDto;
 
-      // Genera un _id utilizando new Types.ObjectId()
+      // Generate  a _id using  new Types.ObjectId()
       const _id = new Types.ObjectId();
 
       const user = new this.userModel({
@@ -46,13 +46,13 @@ export class AuthService {
         user.isDriving = false
       }
 
-      // Guarda el usuario en la base de datos
+      // Saves the user in the database
       await user.save();
 
-      // Obtén el usuario recién creado
+      // Obtain the user previously created
       const newUser = await this.userModel.findById(user._id);
 
-      // Si lo deseas, puedes omitir el campo password en la respuesta
+      // If you wish, you can omit the password field in the answer.
       const { password: pass, ...userObject } = newUser.toObject();
 
       return {
@@ -74,12 +74,12 @@ export class AuthService {
       .select('+password');
 
     if (!user) {
-      throw new UnauthorizedException('Credenciales no válidas (email)');
+      throw new UnauthorizedException('Invalid credentials (email)');
     }
 
     // encryptar la password
     if (!bcrypt.compareSync(password, user.password)) {
-      throw new UnauthorizedException('Credenciales no válidas (contraseña)');
+      throw new UnauthorizedException('Invalid credentials (password)');
     }
 
     return {
@@ -106,7 +106,7 @@ export class AuthService {
   private handleDBErrors(error: any): never {
     if (error.code === 11000) {
       throw new BadRequestException(
-        `El usuario con el correo electrónico '${error.keyValue.email}' ya existe en la base de datos.`,
+        ` the user with the e-mail '${error.keyValue.email}' already exists in the database.`,
       );
     }
 

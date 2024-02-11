@@ -20,20 +20,30 @@ export class TripsController {
   // @Auth()
   // @RoleProtected(ValidRoles.rider)
   // @UseGuards(AuthGuard(), UserRoleGuard)
-  @ApiOperation({ summary: 'Registra un nuevo viaje' })
+  @ApiOperation({ summary: 'Register a new trip' })
   @ApiResponse({
     status: 200,
-    description: 'retorna el viaje creado',
+    description: 'Return trip created',
   })
   createTrip(@Body() createTripDto: CreateTripDto) {
     return this.tripsService.createTrip(createTripDto);
   }
 
+  @ApiOperation({ summary: 'Completed trip' })
+  @ApiResponse({
+    status: 200,
+    description: 'Return trip completed',
+  })
   @Patch(':id')
   completedTrip(@Param('id', ParseMongoIdPipe) id:Types.ObjectId) {
     return this.tripsService.completedTrip(id);
   }
 
+  @ApiOperation({ summary: 'Search for a trip by id' })
+  @ApiResponse({
+    status: 200,
+    description: '',
+  })
   @Get(':id')
   getTripById(@Param('id', ParseMongoIdPipe) id:Types.ObjectId) {
     return this.tripsService.getTripById(id);

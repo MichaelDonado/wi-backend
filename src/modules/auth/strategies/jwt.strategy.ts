@@ -20,7 +20,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     });
   }
-  // validaciones para el token
+  // token validations
   async validate(payload: JwtPayload): Promise<UserDocument> {
     const { _id } = payload;
 

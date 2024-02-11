@@ -5,7 +5,7 @@ export default registerAs('config', () => {
     mongodbHost: process.env.MONGODB_HOST,
     appPort: process.env.APP_PORT,
     jwtToken: process.env.JWT_TOKEN,
-    wompiApi: process.env.WOMPI_API,
+    wiApi: process.env.WI_API,
     publicKey: process.env.PUBLIC_KEY,
   };
 });

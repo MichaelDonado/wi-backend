@@ -8,7 +8,7 @@ import { Model, Types } from 'mongoose';
 import { User } from './models/user.model';
 import { UpdateUserDto } from './dto/update-user.dto';
 
-const USER_NOT_FOUND = 'Usuario no encontrado';
+const USER_NOT_FOUND = 'User not found';
 
 @Injectable()
 export class UsersService {
@@ -30,7 +30,7 @@ export class UsersService {
 
       return user;
     } catch (error) {
-      throw new BadRequestException('ID no válido');
+      throw new BadRequestException('Invalid ID');
     }
   }
 
@@ -64,7 +64,7 @@ export class UsersService {
       throw new NotFoundException(USER_NOT_FOUND);
     }
 
-    return `Se ha eliminado con éxito al usuario: ${fullName}`;
+    return `User has been successfully removed: ${fullName}`;
   }
 
   private async notFound(_id: string | Types.ObjectId): Promise<any> {
