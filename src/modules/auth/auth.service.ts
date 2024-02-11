@@ -27,7 +27,7 @@ export class AuthService {
     try {
       const { password, roles, ...userData } = createUserDto;
 
-      // Generate  a _id using  new Types.ObjectId()
+      // Generate a _id using  new Types.ObjectId()
       const _id = new Types.ObjectId();
 
       const user = new this.userModel({
@@ -65,6 +65,7 @@ export class AuthService {
   }
 
   async login(loginUserDto: LoginUserDto) {
+    
     const { password, email } = loginUserDto;
 
     const user = await this.userModel
@@ -77,7 +78,7 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials (email)');
     }
 
-    // encryptar la password
+    // encrypt the password
     if (!bcrypt.compareSync(password, user.password)) {
       throw new UnauthorizedException('Invalid credentials (password)');
     }
@@ -96,13 +97,13 @@ export class AuthService {
       token: this.getJwtToken({ _id: user._id.toString() }),
     };
   }
-  // obtener el token y firmarlo
+  // obtain the token and sign it
   private getJwtToken(payload: JwtPayload) {
     const token = this.jwtService.sign(payload);
     return token;
   }
 
-  // manejo de errores
+  // error handling
   private handleDBErrors(error: any): never {
     if (error.code === 11000) {
       throw new BadRequestException(

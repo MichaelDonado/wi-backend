@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Trip, TripSchema } from './models/trip.model';
 import { AuthModule } from '../auth/auth.module';
+import { CalculateAmountService } from '@/utils/calculate/calculate-amount.service';
 
 @Module({
   imports: [
@@ -18,6 +19,6 @@ import { AuthModule } from '../auth/auth.module';
     AuthModule,
   ],
   controllers: [TripsController],
-  providers: [TripsService],
+  providers: [TripsService, CalculateAmountService],
 })
 export class TripsModule {}
