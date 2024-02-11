@@ -8,6 +8,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { TripsModule } from './modules/trips/trips.module';
 
 @Module({
   imports: [
@@ -30,9 +31,11 @@ import { ServeStaticModule } from '@nestjs/serve-static';
       rootPath: join(__dirname, '..', 'src/public'),
     }),
     AuthModule,
-    UsersModule
+    UsersModule,
+    TripsModule
   ],
   controllers: [],
   providers: [],
 })
 export class AppModule {}
+

@@ -50,7 +50,5 @@ export class CreateUserDto {
     description: 'Nombre completo del rol',
   })
   roles: string[];
-
-  
-
 }
+

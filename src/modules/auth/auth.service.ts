@@ -42,6 +42,10 @@ export class AuthService {
         user.cardToken = null;
       }
 
+      if (roles.includes('driver')) {
+        user.isDriving = false
+      }
+
       // Guarda el usuario en la base de datos
       await user.save();
 
@@ -111,3 +115,4 @@ export class AuthService {
     throw new InternalServerErrorException('Please check server logs');
   }
 }
+
