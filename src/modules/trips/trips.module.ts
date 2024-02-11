@@ -6,6 +6,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Trip, TripSchema } from './models/trip.model';
 import { AuthModule } from '../auth/auth.module';
 import { CalculateAmountService } from '@/utils/calculate/calculate-amount.service';
+import { HandleErrorService } from '@/utils/handle-error/handle-error.service';
 
 @Module({
   imports: [
@@ -19,6 +20,6 @@ import { CalculateAmountService } from '@/utils/calculate/calculate-amount.servi
     AuthModule,
   ],
   controllers: [TripsController],
-  providers: [TripsService, CalculateAmountService],
+  providers: [TripsService, CalculateAmountService, HandleErrorService],
 })
 export class TripsModule {}
