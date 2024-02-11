@@ -27,20 +27,20 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
   @Get()
-  @ApiOperation({ summary: 'Obtener todos los usuarios' })
+  @ApiOperation({ summary: 'Get all users' })
   getAllUser() {
     return this.usersService.getAllUser();
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Obtener un usuario por ID' })
+  @ApiOperation({ summary: 'Get a user by ID' })
   getUserById(@Param('id', ParseMongoIdPipe) id: Types.ObjectId) {
     return this.usersService.getUserById(id);
   }
 
   @Patch(':id')
   @ApiOperation({
-    summary: 'Actualizar un usuario por ID',
+    summary: 'Update a user by ID',
   })
   @ApiBearerAuth()
   @RoleProtected(ValidRoles.admin)
@@ -54,7 +54,7 @@ export class UsersController {
   @RoleProtected(ValidRoles.admin)
   @UseGuards(AuthGuard(), UserRoleGuard)
   @ApiOperation({
-    summary: 'Eliminar un usuario por ID (solo para administradores)',
+    summary: 'Delete a user by ID (for administrators only)',
   })
   removeUser(@Param('id', ParseMongoIdPipe) id: Types.ObjectId) {
     return this.usersService.removeUser(id);

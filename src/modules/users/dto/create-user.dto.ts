@@ -16,7 +16,7 @@ export class CreateUserDto {
   @IsEmail()
   @ApiProperty({
     example: 'user@example.com',
-    description: 'Dirección de correo electrónico del usuario',
+    description: 'User e-mail address',
   })
   email: string;
 
@@ -25,11 +25,11 @@ export class CreateUserDto {
   @MaxLength(50)
   @Matches(/(?:(?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
     message:
-      'La contraseña debe contener al menos una mayúscula, una minúscula y un número',
+      'The password must contain at least one uppercase letter, one lowercase letter and one number.',
   })
   @ApiProperty({
     example: 'Password123',
-    description: 'Contraseña del usuario',
+    description: 'User password',
   })
   password: string;
 
@@ -37,17 +37,17 @@ export class CreateUserDto {
   @MinLength(1)
   @ApiProperty({
     example: 'John Doe',
-    description: 'Nombre completo del usuario',
+    description: 'Full name of user',
   })
   fullName: string;
 
-  @IsArray({ message: 'Roles debe ser un arreglo.' })
-  @ArrayNotEmpty({ message: 'Roles no puede estar vacío.' })
-  @IsNotEmpty({ each: true, message: 'Cada elemento del arreglo de roles no puede estar vacío.' })
-  @IsIn(['driver', 'rider'], { each: true, message: 'Los roles deben ser "driver" o "rider".' })
+  @IsArray({ message: 'Roles must be an arrangement.' })
+  @ArrayNotEmpty({ message: 'Roles cannot be empty.' })
+  @IsNotEmpty({ each: true, message: 'Each element of the role arrangement cannot be empty.' })
+  @IsIn(['driver', 'rider'], { each: true, message: 'Roles must be "driver" or "rider".' })
   @ApiProperty({
     example: 'driver or rider',
-    description: 'Nombre completo del rol',
+    description: 'Role name',
   })
   roles: string[];
 }

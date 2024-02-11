@@ -3,12 +3,12 @@ import { ApiProperty } from '@nestjs/swagger';
 
 
 class GeoLocation {
-    @ApiProperty({ example: 40.7128, description: 'La latitud de la ubicación' })
+    @ApiProperty({ example: 40.7128, description: 'The latitude of the location' })
     @IsNumber()
     @IsNotEmpty()
     latitude: number;
 
-    @ApiProperty({ example: -74.0060, description: 'La longitud de la ubicación' })
+    @ApiProperty({ example: -74.0060, description: 'The length of the location' })
     @IsNumber()
     @IsNotEmpty()
     longitude: number;
@@ -16,16 +16,16 @@ class GeoLocation {
 
 export class CreateTripDto {
 
-    @ApiProperty({ example: '65c66334deb81ca3d747358d', description: 'ID del pasajero' })
+    @ApiProperty({ example: '65c66334deb81ca3d747358d', description: 'Passenger ID' })
     @IsNotEmpty()
     riderId: string;
 
-    @ApiProperty({ type: GeoLocation, description: 'Ubicación de inicio del viaje' })
+    @ApiProperty({ type: GeoLocation, description: 'Start location of the trip' })
     @ValidateNested()
     @IsNotEmpty()
     startPosition: GeoLocation;
 
-    @ApiProperty({ type: GeoLocation, description: 'Ubicación final del viaje' })
+    @ApiProperty({ type: GeoLocation, description: 'Final location of the trip' })
     @ValidateNested()
     @IsNotEmpty()
     finalPosition: GeoLocation;

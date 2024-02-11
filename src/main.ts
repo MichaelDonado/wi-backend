@@ -19,7 +19,7 @@ async function Main() {
   );
 
   const config = new DocumentBuilder()
-    .setTitle('Wompi Backend Service')
+    .setTitle('Wi Backend Service')
     .setDescription('EndPoints')
     .setVersion('1.0')
     .build();
