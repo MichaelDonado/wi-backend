@@ -5,15 +5,14 @@
 </p>
 
 
-Este es un proyecto de NestJS con una estructura modular organizada para facilitar el desarrollo y mantenimiento de tu aplicación. Sigue los siguientes pasos para comenzar:
+This is a NestJS project with a modular structure organized to facilitate the development and maintenance of your application. Follow the steps below to get started:
 
-## Paso 1: Clona el Repositorio
-
+## Step  1: Clone the repository
 ```bash
 git clone https://github.com/MichaelDonado/wi-backend.git
 ```
-## Paso 2: Instala las Dependencias
-Asegúrate de tener Node.js y npm (o yarn) instalados en tu máquina. Luego, ejecuta el siguiente comando para instalar las dependencias:
+## Step 2: Installs the dependencies
+Make sure you have Node.js and npm (or yarn) installed on your machine. Then, run the following command to install the dependencies:
 
 ```
 npm install
@@ -21,15 +20,15 @@ npm install
 yarn install
 ```
 
-## Paso 3: Tener Nest CLI instalado
+## Step 3: Have Nest CLI installed
 ```
 npm i -g @nestjs/cli
 ```
 
-## Paso 4: Configuración
+## Step 4: Configuration
 
-Dentro de la carpeta src/config, encontrarás archivos de configuración para diferentes entornos (desarrollo, producción, etc.). Ajusta estos archivos según tus necesidades.
-copia el .env.example esas son las variables de entornos a configurar , si es para desarrollo el archivo debe ser .env.dev, para prod .env
+Inside the src/config folder, you will find configuration files for different environments (development, production, etc.). Adjust these files according to your needs.
+copy the .env.example those are the environment variables to be configured, if it is for development the file should be .env.dev, for prod .env
 ```
 MONGODB_HOST= 
 APP_PORT= 
@@ -37,8 +36,8 @@ JWT_SECRET=
 WI_API=
 PUBLIC_KEY=
 ```
-## 🏗️ Estructura del Proyecto
-La estructura del proyecto es la siguiente:
+## 🏗️ Project Structure
+The structure of the project is as follows:
 ```
 src/
 │
@@ -77,8 +76,8 @@ src/
 
 ```
 
-## Paso 5: Inicia la Aplicación
-Para ejecutar la aplicación en modo de desarrollo, utiliza el siguiente comando:
+## Step 5: Start application
+To run the application in development mode, use the following command:
 
 ```
 npm run start:dev
@@ -86,19 +85,19 @@ npm run start:dev
 yarn start:dev
 ```
 
-## Stack usado
+## Used stack 
 
 - <img src="https://cdn.worldvectorlogo.com/logos/nodejs-1.svg" alt="Imagen" width="30" heigth="30" /> NodeJs
 - <img src="https://cdn.worldvectorlogo.com/logos/nestjs.svg" alt="Imagen" width="30" heigth="30" /> NestJs
 - <img src="https://cdn.worldvectorlogo.com/logos/mongodb-icon-1.svg" alt="Imagen" width="30" heigth="30" /> MongoDB
 
-# Notas
-Sito:
- <a target="_blank" href="">Mirar Sito Web </a> 
+# Notes
+Website:
+ <a target="_blank" href="">View Web Site </a> 
 
 Endpoints:
- <a target="_blank"  href="">Mirar  Documentacion </a> 
+ <a target="_blank"  href="">View Documentation </a> 
 ```
-cargar el archivo backend-wi.postman_collection.json en postman 
+load backend-wi.postman_collection.json file into postman 
 ```
 
