@@ -1,7 +1,7 @@
-# Wompi Backend
+# Wi Backend
 
 <p align="center">
-  <img src="https://wompi.com/assets/img/landing_pais/logo-wompi.svg" alt="Imagen" width="300" />
+  <img src="" alt="Imagen" width="300" />
 </p>
 
 
@@ -10,7 +10,7 @@ Este es un proyecto de NestJS con una estructura modular organizada para facilit
 ## Paso 1: Clona el Repositorio
 
 ```bash
-git clone https://github.com/MichaelDonado/wompi-backend.git
+git clone https://github.com/MichaelDonado/wi-backend.git
 ```
 ## Paso 2: Instala las Dependencias
 Asegúrate de tener Node.js y npm (o yarn) instalados en tu máquina. Luego, ejecuta el siguiente comando para instalar las dependencias:
@@ -34,7 +34,7 @@ copia el .env.example esas son las variables de entornos a configurar , si es pa
 MONGODB_HOST= 
 APP_PORT= 
 JWT_SECRET=
-WOMPI_API=
+WI_API=
 PUBLIC_KEY=
 ```
 ## 🏗️ Estructura del Proyecto
@@ -99,6 +99,6 @@ Sito:
 Endpoints:
  <a target="_blank"  href="">Mirar  Documentacion </a> 
 ```
-cargar el archivo backend-wompi.postman_collection.json en postman 
+cargar el archivo backend-wi.postman_collection.json en postman 
 ```
 
