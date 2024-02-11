@@ -8,6 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 import { User } from '../users/models/user.model';
 
 const USER_NOT_FOUND = 'Usuario no encontrado';
+const TRIP_NOT_FOUND = 'Viaje no encontrado';
 
 @Injectable()
 export class TripsService {
@@ -37,43 +38,77 @@ export class TripsService {
       }
       const _id = new Types.ObjectId();
 
+
+      const driverFree = await this.getFreeDriver();
+
+      if (!driverFree) {
+        return new NotFoundException('No hay conductores disponibles en el momento');
+      }
+
+      const driverId = driverFree.toObject()._id;
+
+
       const trip = new this.tripModel({
         ...tripData,
         _id,
-        riderId,
+        riderId: new Types.ObjectId(riderId),
+        driverId: new Types.ObjectId(driverId),
       });
+
+      await this.updateStatusDriver(driverId, true);
+
 
       await trip.save();
 
       const newTrip = await this.tripModel.findById(trip._id);
-      
-      return {...newTrip.toObject()}
+
+      return { ...newTrip.toObject() }
 
     } catch (error) {
       this.handleDBErrors(error);
     }
-    
+
   }
 
-  findAll() {
-    return `This action returns all trips`;
+  async getTripById(id: Types.ObjectId): Promise<Trip | any > {
+    try {
+      const trip = await this.tripModel.findById(id).exec();
+
+      if (!trip) {
+        return new NotFoundException(TRIP_NOT_FOUND);
+      }
+
+      return trip;
+    } catch (error) {
+      console.log(error)
+      this.handleDBErrors(error);
+    }
+  }
+  
+
+  private async updateStatusDriver(driverId: Types.ObjectId, isDriving: boolean) {
+    await this.userModel
+      .updateOne({ _id: driverId }, { isDriving })
+      .lean();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} trip`;
-  }
+  private async getFreeDriver() {
+    try {
+      const driver = await this.userModel
+        .findOne()
+        .where('roles').in(['driver'])
+        .where('isDriving').equals(false)
+        .exec();
 
-  update(id: number, updateTripDto: UpdateTripDto) {
-    return `This action updates a #${id} trip`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} trip`;
+      return driver;
+    } catch (error) {
+      this.handleDBErrors(error)
+    }
   }
 
   private handleDBErrors(error: any): never {
     console.log(error);
-
     throw new InternalServerErrorException('Please check server logs');
   }
+
 }

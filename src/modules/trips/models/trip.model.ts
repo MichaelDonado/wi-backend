@@ -26,7 +26,6 @@ export class Trip {
 
     @Prop({
         type: Types.ObjectId,
-        required: false
     })
     driverId: Types.ObjectId;
 
@@ -72,6 +71,12 @@ export class Trip {
 
     @Prop({ default: null })
     transactionId: string;
+
+    @Prop({
+        default: null,
+        type: Date,
+      })
+      finished_at: Date;
 
 };
 

@@ -7,6 +7,8 @@ import { Auth, RoleProtected } from '../auth/decorators';
 import { ValidRoles } from '../auth/interfaces';
 import { AuthGuard } from '@nestjs/passport';
 import { UserRoleGuard } from '../auth/guards/user-role.guard';
+import { ParseMongoIdPipe } from '@/core/pipes/parse-mongo-id.pipe';
+import { Types } from 'mongoose';
 
 @ApiTags('Trips')
 @Controller('trips')
@@ -27,23 +29,9 @@ export class TripsController {
     return this.tripsService.createTrip(createTripDto);
   }
 
-  @Get()
-  findAll() {
-    return this.tripsService.findAll();
-  }
-
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.tripsService.findOne(+id);
+  getTripById(@Param('id', ParseMongoIdPipe) id:Types.ObjectId) {
+    return this.tripsService.getTripById(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTripDto: UpdateTripDto) {
-    return this.tripsService.update(+id, updateTripDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.tripsService.remove(+id);
-  }
 }
