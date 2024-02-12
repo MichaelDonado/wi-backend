@@ -1,0 +1,525 @@
+{
+	"info": {
+		"_postman_id": "d93a973b-99e3-4263-8328-4f0cbbcbeb11",
+		"name": "backend-wi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30381267"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"Stevens123@gmail.com\",\n    \"password\": \"12345Stevens\",\n    \"fullName\": \"Stevens Donado\",\n    \"roles\": [\"rider\"] //rider or driver\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/v1/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWM1NWEwYTM2OThiMTFmMTA0ZWI1ZTgiLCJpYXQiOjE3MDc0MzI3NDAsImV4cCI6MTcwNzQzOTk0MH0.IpvH_v6gLx680dqbNTTOzP1btttMRT4_WQnJUAxlFlY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"Tony123@gmail.com\",\n    \"password\": \"12345Tony\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/v1/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/v1/users/65c55a0a3698b11f104eb5e8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"users",
+								"65c55a0a3698b11f104eb5e8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query GetAgents{\r\n  agents {\r\n    _id\r\n    name\r\n    assignedProblem{\r\n      _id\r\n    }\r\n  }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/v1/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWM1NWEwYTM2OThiMTFmMTA0ZWI1ZTgiLCJpYXQiOjE3MDc2ODg3NjAsImV4cCI6MTcwNzY5NTk2MH0.hPvcaVwU9VF7knpfLlO7apirSqvqBC6Ef7A8lxTnufE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:3000/v1/users/65c942c08805bacf0a9b094f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"users",
+								"65c942c08805bacf0a9b094f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWM1NWEwYTM2OThiMTFmMTA0ZWI1ZTgiLCJpYXQiOjE3MDc2ODg4NzYsImV4cCI6MTcwNzY5NjA3Nn0.cgczgiFc41WYVdoDQPK3zPEluw2LI-H_JRXowO9iQxQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"Juanito123@gmail.com\",\r\n    \"fullName\": \"Juanito Delgado\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/v1/users/65c943838805bacf0a9b0958",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"users",
+								"65c943838805bacf0a9b0958"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "trips",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"riderId\": \"65c9a96dcf8cbe2b2add931c\",\n  \"startPosition\": {\n    \"latitude\": 40.7128,\n    \"longitude\": -74.006\n  },\n  \"finalPosition\": {\n    \"latitude\": 40.8025,\n    \"longitude\": -73.106\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/v1/trips/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"trips",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/v1/trips/65ca5a1b9c62e2028312e5d4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"trips",
+								"65ca5a1b9c62e2028312e5d4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "compledTrip",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWM1NWEwYTM2OThiMTFmMTA0ZWI1ZTgiLCJpYXQiOjE3MDc0MzI3ODMsImV4cCI6MTcwNzQzOTk4M30.tE3qL8f0PhErZ71jLfac2FuBNUMFvroT47MvUgtZngw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/v1/trips/65ca5a1b9c62e2028312e5d4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"trips",
+								"65ca5a1b9c62e2028312e5d4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "payment",
+			"item": [
+				{
+					"name": "createPayment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"riderId\": \"65c9a96dcf8cbe2b2add931c\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/v1/payments/create-payment-method",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"payments",
+								"create-payment-method"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createTransaction",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"price\": 80056, \r\n  \"email\": \"Stevens123@gmail.com\", // User email \r\n  \"reference\": \"trip_65ca5a1b9c62e2028312e5d4\", // Payment reference\r\n  \"paymentSourceId\": 99145 // Payment source ID\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/v1/payments/create-transaction",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"payments",
+								"create-transaction"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Wi",
+			"item": [
+				{
+					"name": "addCard",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "pub_test_rrnLHOmdCTLw1kquFbHgxQjKyYSndKhu",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"number\": \"4242424242424242\", // Card number (as a string, without spaces)\r\n  \"exp_month\": \"06\", // Expiration month (as a 2-digit string)\r\n  \"exp_year\": \"29\", // Expiration year (as a 2-digit string)\r\n  \"cvc\": \"123\", // Security code (as a 3 or 4 digit string)\r\n  \"card_holder\": \"Pedro Pérez\" // Name of cardholder (string of at least 5 characters)\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://sandbox.wompi.co/v1/tokens/cards",
+							"protocol": "https",
+							"host": [
+								"sandbox",
+								"wompi",
+								"co"
+							],
+							"path": [
+								"v1",
+								"tokens",
+								"cards"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "paymentSource",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "prv_test_XB40S9HkzVgrx0ZFWdWRBoSeDJkqGzQz",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"type\": \"CARD\",\r\n  \"token\": \"tok_test_8417_4E819d7d4AfB453217b5ea0C806c4141\",\r\n  \"customer_email\": \"Juanito123@gmail.com\",\r\n  \"acceptance_token\": \"eyJhbGciOiJIUzI1NiJ9.eyJjb250cmFjdF9pZCI6MTQyLCJwZXJtYWxpbmsiOiJodHRwczovL3dvbXBpLmNvbS9hc3NldHMvZG93bmxvYWRibGUvcmVnbGFtZW50by1Vc3Vhcmlvcy1Db2xvbWJpYS5wZGYiLCJmaWxlX2hhc2giOiJlZjAzZDVlZTZiM2YxNWMzY2Q0MDJkN2MxZDgwZTJmYyIsImppdCI6IjE3MDc3MTAwMzItMjI2NDgiLCJlbWFpbCI6IiIsImV4cCI6MTcwNzcxMzYzMn0.omoEaslOywT5ML2Vhcd4rD4K4DXIb-hY-sDO19iOZdc\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://sandbox.wompi.co/v1/payment_sources",
+							"protocol": "https",
+							"host": [
+								"sandbox",
+								"wompi",
+								"co"
+							],
+							"path": [
+								"v1",
+								"payment_sources"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createTransaction",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "prv_test_XB40S9HkzVgrx0ZFWdWRBoSeDJkqGzQz",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount_in_cents\": 800560,\r\n    \"currency\": \"COP\",\r\n    \"customer_email\": \"Stevens123@gmail.com\",\r\n    \"payment_method\": {\r\n        \"installments\": 2\r\n    },\r\n    \"reference\": \"trip1234678\",\r\n    \"payment_source_id\": 99145\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://sandbox.wompi.co/v1/transactions",
+							"protocol": "https",
+							"host": [
+								"sandbox",
+								"wompi",
+								"co"
+							],
+							"path": [
+								"v1",
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTokenAceptation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://sandbox.wompi.co/v1/merchants/pub_test_rrnLHOmdCTLw1kquFbHgxQjKyYSndKhu",
+							"protocol": "https",
+							"host": [
+								"sandbox",
+								"wompi",
+								"co"
+							],
+							"path": [
+								"v1",
+								"merchants",
+								"pub_test_rrnLHOmdCTLw1kquFbHgxQjKyYSndKhu"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

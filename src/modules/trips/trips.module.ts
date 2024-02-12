@@ -7,9 +7,13 @@ import { Trip, TripSchema } from './models/trip.model';
 import { AuthModule } from '../auth/auth.module';
 import { CalculateAmountService } from '@/utils/calculate/calculate-amount.service';
 import { HandleErrorService } from '@/utils/handle-error/handle-error.service';
+import { PaymentsModule } from '../payments/payments.module';
+import { PaymentsService } from '../payments/payments.service';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [
+    HttpModule.register({}),
     ConfigModule,
     MongooseModule.forFeature([
       {
@@ -20,6 +24,7 @@ import { HandleErrorService } from '@/utils/handle-error/handle-error.service';
     AuthModule,
   ],
   controllers: [TripsController],
-  providers: [TripsService, CalculateAmountService, HandleErrorService],
+  providers: [TripsService, CalculateAmountService, HandleErrorService,PaymentsService],
+  
 })
 export class TripsModule {}

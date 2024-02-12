@@ -1,6 +1,5 @@
 import { Schema, SchemaFactory, Prop } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { TypePayment } from '../interfaces/payment-sources.interface';
 
 export type UserDocument = User & Document;
 
@@ -40,14 +39,14 @@ export class User {
   @Prop()
   isDriving?: boolean
 
-
   @Prop({
-    type: { types: String, enum: ['card', 'nequi'] },
+    type: String,
+    enum: ['card', 'nequi', null]
   })
-  typePayment?: TypePayment;
+  typePayment?: string;
 
   @Prop()
-  cardToken?: string;
+  paymentSourceId?: number;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

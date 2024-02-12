@@ -18,6 +18,7 @@ import {
   ApiTags,
   ApiBearerAuth,
   ApiOperation,
+  ApiParam,
 } from '@nestjs/swagger';
 import { UpdateUserDto } from './dto/update-user.dto';
 
@@ -25,7 +26,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
-
+  
   @Get()
   @ApiOperation({ summary: 'Get all users' })
   getAllUser() {
@@ -34,6 +35,7 @@ export class UsersController {
 
   @Get(':id')
   @ApiOperation({ summary: 'Get a user by ID' })
+  @ApiParam({ name: 'id', type: String, description: 'ID of the user', required: true })
   getUserById(@Param('id', ParseMongoIdPipe) id: Types.ObjectId) {
     return this.usersService.getUserById(id);
   }
@@ -42,6 +44,7 @@ export class UsersController {
   @ApiOperation({
     summary: 'Update a user by ID',
   })
+  @ApiParam({ name: 'id', type: String, description: 'ID of the user', required: true })
   @ApiBearerAuth()
   @RoleProtected(ValidRoles.admin)
   @UseGuards(AuthGuard(), UserRoleGuard)
@@ -50,12 +53,13 @@ export class UsersController {
   }
 
   @Delete(':id')
-  @ApiBearerAuth()
-  @RoleProtected(ValidRoles.admin)
-  @UseGuards(AuthGuard(), UserRoleGuard)
   @ApiOperation({
     summary: 'Delete a user by ID (for administrators only)',
   })
+  @ApiParam({ name: 'id', type: String, description: 'ID of the user', required: true })
+  @ApiBearerAuth()
+  @RoleProtected(ValidRoles.admin)
+  @UseGuards(AuthGuard(), UserRoleGuard)
   removeUser(@Param('id', ParseMongoIdPipe) id: Types.ObjectId) {
     return this.usersService.removeUser(id);
   }

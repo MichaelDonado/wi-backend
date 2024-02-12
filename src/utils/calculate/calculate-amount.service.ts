@@ -44,5 +44,4 @@ export class CalculateAmountService {
 
         return Math.round(totalAmount);;
     }
-
 }

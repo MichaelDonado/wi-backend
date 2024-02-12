@@ -1,7 +1,6 @@
 import { Schema, SchemaFactory, Prop } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
-
 export type TripDocument = Trip & Document;
 
 @Schema({
@@ -41,7 +40,6 @@ export class Trip {
         default: 'start'
     })
     status: string;
-    
 
     @Prop({
         type: {
@@ -73,10 +71,15 @@ export class Trip {
     transactionId: string;
 
     @Prop({
+        default:null
+    })
+    paymentSourceId: number;
+
+    @Prop({
         default: null,
         type: Date,
-      })
-      finished_at: Date;
+    })
+    finished_at: Date;
 
 };
 

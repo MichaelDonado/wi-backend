@@ -1,9 +1,5 @@
 export interface PaymentSources{
-    typePayment: TypePayment,
+    typePayment: string,
     cardToken: string
 }
 
-export enum TypePayment {
-    card = 'card',
-    nequi = 'nequi'
-} 
