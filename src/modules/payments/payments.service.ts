@@ -27,6 +27,12 @@ export class PaymentsService {
         return new NotFoundException('User not found');
       }
 
+      const isRider = userRider.roles.includes('rider');
+
+      if (!isRider) {
+        return new NotFoundException('The user is not a rider');
+      }
+
       if (userRider.paymentSourceId) {
         return new BadRequestException('This user already has a payment method');
       }
