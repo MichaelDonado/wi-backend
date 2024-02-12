@@ -39,7 +39,7 @@ export class AuthService {
 
       if (roles.includes('rider')) {
         user.typePayment = null;
-        user.cardToken = null;
+        user.paymentSourceId = null;
       }
 
       if (roles.includes('driver')) {

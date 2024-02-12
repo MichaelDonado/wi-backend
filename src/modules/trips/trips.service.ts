@@ -1,13 +1,12 @@
-import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTripDto } from './dto/create-trip.dto';
-import { UpdateTripDto } from './dto/update-trip.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Trip } from './models/trip.model';
 import mongoose, { Model, Types } from 'mongoose';
-import { JwtService } from '@nestjs/jwt';
 import { User } from '../users/models/user.model';
 import { CalculateAmountService } from '@/utils/calculate/calculate-amount.service';
 import { HandleErrorService } from '@/utils/handle-error/handle-error.service';
+import { PaymentsService } from '../payments/payments.service';
 
 const USER_NOT_FOUND = 'User not found';
 const TRIP_NOT_FOUND = 'Trip not found';
@@ -17,9 +16,9 @@ export class TripsService {
   constructor(
     @InjectModel(Trip.name) private readonly tripModel: Model<Trip>,
     @InjectModel(User.name) private readonly userModel: Model<User>,
-    private readonly jwtService: JwtService,
     private readonly calculateAmountService: CalculateAmountService,
     private readonly handleErrorService: HandleErrorService,
+    private readonly paymentsService: PaymentsService,
   ) { }
 
   async createTrip(createTripDto: CreateTripDto) {
@@ -37,7 +36,7 @@ export class TripsService {
         return new NotFoundException('The user is not a rider');
       }
 
-      if (!user.cardToken) {
+      if (!user.paymentSourceId) {
         return new BadRequestException('Add a payment method to continue');
       }
 
@@ -56,6 +55,7 @@ export class TripsService {
         _id,
         riderId: new Types.ObjectId(riderId),
         driverId: new Types.ObjectId(driverId),
+        paymentSourceId: user.paymentSourceId,
       });
 
       await this.updateStatusDriver(driverId, true);
@@ -92,9 +92,20 @@ export class TripsService {
       const elapsedTimeMinutes = this.calculateAmountService.calculateElapsedTime(tripCompleted.created_at, tripCompleted.finished_at);
 
       const totalAmount = this.calculateAmountService.calculateTotalAmount(distanceKm, elapsedTimeMinutes);
+      
+      const user = await this.userModel.findById(new mongoose.Types.ObjectId(trip.riderId)).exec();
+
+      const requestPayload = {
+        price: totalAmount,
+        email: user.email,
+        reference: `trip_${trip._id}`,
+        paymentSourceId: trip.paymentSourceId,
+      };
+
+      const transactionId = await this.paymentsService.createTransaction(requestPayload)
 
       await this.tripModel
-        .updateOne({ _id: id }, { price: totalAmount, status: 'final' }, { new: true })
+        .updateOne({ _id: id }, { price: totalAmount, status: 'final', transactionId }, { new: true })
         .lean();
 
       const completed = await this.tripModel.findById(trip._id);
@@ -121,8 +132,6 @@ export class TripsService {
     } catch (error) {
       this.handleErrorService.handleDBErrors(error);
     }
-
-
   }
 
   async getTripById(id: Types.ObjectId): Promise<Trip | any> {
@@ -149,7 +158,6 @@ export class TripsService {
       console.log(error)
       this.handleErrorService.handleDBErrors(error);
     }
-
   }
 
   private async getFreeDriver() {
@@ -165,5 +173,4 @@ export class TripsService {
       this.handleErrorService.handleDBErrors(error)
     }
   }
-
 }

@@ -6,5 +6,6 @@ export const JoiValidationSchema = Joi.object({
   JWT_SECRET: Joi.required(),
   WI_API: Joi.string().required(),
   PUBLIC_KEY: Joi.string().required(),
+  PRIVATE_KEY: Joi.string().required(),
 });
 

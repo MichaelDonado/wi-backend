@@ -35,6 +35,7 @@ APP_PORT=
 JWT_SECRET=
 WI_API=
 PUBLIC_KEY=
+PRIVATE_KEY=
 ```
 ## 🏗️ Project Structure
 The structure of the project is as follows:
@@ -67,8 +68,20 @@ src/
 │   │   ├── trips.service.ts
 │   │   ├── trips.module.ts
 │   │   └── ...
+│   │ 
+│   ├── payments/
+│   │   ├── payments.controller.ts
+│   │   ├── payments.service.ts
+│   │   ├── payments.module.ts
+│   │   └── ...
 │   │
 │   └── ...
+│
+│── public/
+│   ├── ...
+│
+│── utils/
+│   ├── ...
 │
 ├── main.ts
 └── ...

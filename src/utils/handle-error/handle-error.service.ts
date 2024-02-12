@@ -7,5 +7,4 @@ export class HandleErrorService {
         console.log(error);
         throw new InternalServerErrorException('Please check server logs');
     }
-
 }

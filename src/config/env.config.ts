@@ -7,6 +7,7 @@ export default registerAs('config', () => {
     jwtToken: process.env.JWT_TOKEN,
     wiApi: process.env.WI_API,
     publicKey: process.env.PUBLIC_KEY,
+    privateKey: process.env.PRIVATE_KEY
   };
 });
 
